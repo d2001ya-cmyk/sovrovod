@@ -176,6 +176,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   }
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -191,9 +192,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   </button>
 </div>
 
-<button class="mobile-fab" id="fab" onclick="window.print()">
+<button class="mobile-fab" id="fab" onclick="doPrint(this)">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-  PDF
+  ↓ PDF
 </button>
 
 <div class="app">
@@ -238,9 +239,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     </div>
 
     <div class="sb-actions">
-      <button class="btn-primary" onclick="doPrint()">
+      <button class="btn-primary" onclick="doPrint(this)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Распечатать / Сохранить PDF
+        ↓ Скачать PDF
       </button>
       <button class="btn-ghost" onclick="clearForm()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -345,20 +346,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     render();
   };
 
-  window.doPrint=function(){
-    /* Ensure document is visible even if mobile preview tab isn't active */
-    var pv=document.getElementById('preview-panel');
+  window.doPrint=function(btn){
     var doc=document.getElementById('doc');
-    var prevDisplay=pv.style.display;
-    pv.style.setProperty('display','block','important');
-    doc.style.setProperty('display','block','important');
-    setTimeout(function(){
-      window.print();
-      setTimeout(function(){
-        pv.style.display=prevDisplay;
-        doc.style.display='';
-      },500);
-    },50);
+    var pv=document.getElementById('preview-panel');
+
+    /* Show doc if hidden on mobile */
+    var pvHidden=window.getComputedStyle(pv).display==='none';
+    if(pvHidden){
+      pv.style.cssText='display:block!important';
+      doc.style.cssText='display:block!important';
+    }
+
+    /* Button loading state */
+    var orig=btn?btn.innerHTML:'';
+    if(btn){btn.disabled=true;btn.innerHTML='<span style="opacity:.7">Генерация…</span>';}
+
+    var sid=val('i-sid');
+    var nam=val('i-nam');
+    var fname=(sid?'pismo-'+sid:(nam?'pismo-'+nam.split(' ')[0]:'soprovodetelnoye-pismo'))+'.pdf';
+
+    var opt={
+      margin:[18,16,18,20],
+      filename:fname,
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{scale:2,useCORS:true,logging:false,letterRendering:true},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+    };
+
+    html2pdf().set(opt).from(doc).save().then(function(){
+      if(btn){btn.disabled=false;btn.innerHTML=orig;}
+      if(pvHidden){pv.style.cssText='';doc.style.cssText='';}
+    }).catch(function(){
+      if(btn){btn.disabled=false;btn.innerHTML=orig;}
+      if(pvHidden){pv.style.cssText='';doc.style.cssText='';}
+    });
   };
 
   window.showTab=function(tab){
