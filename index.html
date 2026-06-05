@@ -350,7 +350,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     var doc=document.getElementById('doc');
     var pv=document.getElementById('preview-panel');
 
-    /* Show doc if hidden on mobile */
+    /* Show doc if hidden (mobile tab) */
     var pvHidden=window.getComputedStyle(pv).display==='none';
     if(pvHidden){
       pv.style.cssText='display:block!important';
@@ -361,22 +361,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     var orig=btn?btn.innerHTML:'';
     if(btn){btn.disabled=true;btn.innerHTML='<span style="opacity:.7">Генерация…</span>';}
 
+    /* Filename */
     var sid=val('i-sid');
     var nam=val('i-nam');
     var fname=(sid?'pismo-'+sid:(nam?'pismo-'+nam.split(' ')[0]:'soprovodetelnoye-pismo'))+'.pdf';
 
+    /* Remove min-height so doc shrinks to content — prevents empty 2nd page */
+    var origMinH=doc.style.minHeight;
+    doc.style.minHeight='auto';
+    /* Force consistent 794px width for rendering */
+    var origW=doc.style.width;
+    doc.style.width='794px';
+
     var opt={
-      margin:[18,16,18,20],
+      margin:0,
       filename:fname,
       image:{type:'jpeg',quality:0.98},
-      html2canvas:{scale:2,useCORS:true,logging:false,letterRendering:true},
-      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+      html2canvas:{
+        scale:2,
+        useCORS:true,
+        logging:false,
+        letterRendering:true,
+        windowWidth:794
+      },
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+      pagebreak:{mode:'avoid-all'}
     };
 
     html2pdf().set(opt).from(doc).save().then(function(){
+      doc.style.minHeight=origMinH;
+      doc.style.width=origW;
       if(btn){btn.disabled=false;btn.innerHTML=orig;}
       if(pvHidden){pv.style.cssText='';doc.style.cssText='';}
     }).catch(function(){
+      doc.style.minHeight=origMinH;
+      doc.style.width=origW;
       if(btn){btn.disabled=false;btn.innerHTML=orig;}
       if(pvHidden){pv.style.cssText='';doc.style.cssText='';}
     });
