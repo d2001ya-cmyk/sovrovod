@@ -3,620 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Конструктор сопроводительного письма для мерчандайзеров — ООО Смена">
+<meta name="description" content="Конструктор сопроводительного письма — ООО Смена">
 <title>Сопроводительное письмо — ООО «Смена»</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  background: #DCDCDC;
-  color: #1A1A1A;
-  min-height: 100%;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#DCDCDC;color:#1A1A1A}
+
+/* ═══ LAYOUT ═══ */
+.app{display:flex;min-height:100vh}
+
+/* ─── Sidebar ─── */
+.sidebar{
+  width:320px;min-width:320px;background:#1C1C1E;
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto
 }
-
-/* ═══ DESKTOP LAYOUT ═══ */
-.app {
-  display: flex;
-  min-height: 100vh;
+.sb-head{
+  padding:24px 24px 18px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  flex-shrink:0
 }
-
-/* ── Sidebar ── */
-.sidebar {
-  width: 340px;
-  min-width: 340px;
-  background: #1C1C1E;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
+.logo{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.logo-badge{
+  width:36px;height:36px;background:#FC3F1D;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:#fff;flex-shrink:0
 }
-
-.sb-header {
-  padding: 26px 28px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  flex-shrink: 0;
+.logo-name{font-size:14px;font-weight:600;color:#fff}
+.logo-dept{font-size:11px;color:rgba(255,255,255,.38);margin-top:2px}
+.sb-tag{
+  display:inline-block;background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.42);font-size:10px;font-weight:500;
+  letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-radius:4px
 }
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 13px;
+.sb-fields{flex:1;padding:18px 24px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+.field{display:flex;flex-direction:column;gap:5px}
+.field-label{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.field-label .req{color:#FC3F1D;margin-left:2px}
+.field input{
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.11);
+  border-radius:7px;padding:10px 12px;font-family:inherit;font-size:15px;
+  color:#fff;outline:none;width:100%;-webkit-appearance:none;
+  transition:border-color .15s,background .15s
 }
-
-.logo-badge {
-  width: 38px; height: 38px;
-  background: #FC3F1D;
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; font-weight: 700; color: #fff;
-  flex-shrink: 0;
+.field input:focus{border-color:#FC3F1D;background:rgba(255,255,255,.11)}
+.field input::placeholder{color:rgba(255,255,255,.2)}
+.field input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.3);cursor:pointer}
+.sb-actions{padding:14px 24px 24px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:9px;flex-shrink:0}
+.btn-primary{
+  background:#FC3F1D;color:#fff;border:none;border-radius:8px;padding:13px;
+  font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:background .15s;width:100%;-webkit-tap-highlight-color:transparent
 }
-
-.logo-name { font-size: 15px; font-weight: 600; color: #fff; }
-.logo-dept { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 2px; }
-
-.sb-tag {
-  display: inline-block;
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.42);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 5px;
+.btn-primary:active{background:#C42D10;transform:scale(.98)}
+.btn-ghost{
+  background:transparent;color:rgba(255,255,255,.35);
+  border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:10px;
+  font-family:inherit;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .15s;width:100%;-webkit-tap-highlight-color:transparent
 }
+.btn-ghost:active{color:rgba(255,255,255,.7)}
 
-.sb-fields {
-  flex: 1;
-  padding: 20px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-y: auto;
+/* ─── Preview ─── */
+.preview{flex:1;overflow-y:auto;padding:40px 48px;display:flex;flex-direction:column;align-items:center}
+.preview-hint{
+  width:100%;max-width:794px;font-size:11px;color:#888;margin-bottom:11px;
+  display:flex;align-items:center;gap:6px
 }
-
-.field { display: flex; flex-direction: column; gap: 6px; }
-
-.field-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.42);
-  user-select: none;
+.preview-hint::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:#4CAF50;flex-shrink:0;
+  animation:pulse 2s ease-in-out infinite
 }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 
-.field-label .req { color: #FC3F1D; margin-left: 2px; }
-
-.field input {
-  background: rgba(255,255,255,0.07);
-  border: 1.5px solid rgba(255,255,255,0.11);
-  border-radius: 8px;
-  padding: 10px 13px;
-  font-family: inherit;
-  font-size: 15px;
-  color: #fff;
-  outline: none;
-  transition: border-color 0.15s, background 0.15s;
-  width: 100%;
-  -webkit-appearance: none;
+/* ─── A4 document ─── */
+.doc{
+  background:#fff;width:794px;min-height:1100px;
+  padding:50px 62px 56px;
+  font-family:'Times New Roman',Times,Georgia,serif;font-size:12pt;color:#000;line-height:1.5
 }
-
-.field input:hover { border-color: rgba(255,255,255,0.22); }
-.field input:focus {
-  border-color: #FC3F1D;
-  background: rgba(255,255,255,0.11);
-}
-.field input::placeholder { color: rgba(255,255,255,0.2); }
-.field input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1) opacity(0.32);
-  cursor: pointer;
-}
-
-.sb-actions {
-  padding: 16px 28px 26px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.btn-print {
-  background: #FC3F1D;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 13px 18px;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: background 0.15s;
-  width: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.btn-print:hover { background: #E03518; }
-.btn-print:active { background: #C42D10; transform: scale(0.98); }
-
-.btn-clear {
-  background: transparent;
-  color: rgba(255,255,255,0.33);
-  border: 1.5px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  padding: 11px 18px;
-  font-family: inherit;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.15s;
-  width: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.btn-clear:hover {
-  color: rgba(255,255,255,0.65);
-  border-color: rgba(255,255,255,0.25);
-}
-
-/* ── Preview ── */
-.preview {
-  flex: 1;
-  overflow-y: auto;
-  padding: 44px 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.preview-status {
-  width: 100%;
-  max-width: 794px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 12px;
-}
-
-.preview-status::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #4CAF50;
-  flex-shrink: 0;
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
-}
-
-/* ── A4 document ── */
-.doc {
-  background: #fff;
-  width: 794px;
-  min-height: 1100px;
-  padding: 52px 64px 58px;
-  font-family: 'Times New Roman', Times, Georgia, serif;
-  font-size: 12pt;
-  color: #000;
-  line-height: 1.5;
-}
-
-.doc-letterhead {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #999;
-}
-
-.doc-letterhead-logo {
-  flex-shrink: 0;
-  padding-top: 4px;
-}
-
-.doc-logo-img {
-  width: 120px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-.doc-letterhead-info { flex: 1; }
-
-.doc-co-name {
-  font-size: 13pt;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.doc-co-details {
-  font-size: 9pt;
-  line-height: 1.7;
-  color: #222;
-}
-
-.doc-recipient { font-size: 11pt; margin-bottom: 4px; }
-.doc-from { font-size: 11pt; margin-bottom: 20px; }
-
-.doc-title {
-  text-align: center;
-  font-size: 14pt;
-  font-weight: 700;
-  text-decoration: underline;
-  margin-bottom: 18px;
-}
-
-.doc-body {
-  font-size: 12pt;
-  text-align: justify;
-  margin-bottom: 14px;
-}
-
-.doc-executor-label {
-  font-size: 12pt;
-  font-weight: 700;
-  margin: 12px 0 8px;
-}
-
-.doc-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11pt;
-  margin-bottom: 14px;
-}
-
-.doc-table th, .doc-table td {
-  border: 1px solid #000;
-  padding: 6px 10px;
-  vertical-align: middle;
-}
-
-.doc-table th {
-  background: #F0F0F0;
-  font-weight: 700;
-  text-align: center;
-}
-
-.doc-table td:first-child { text-align: center; width: 8%; }
-.doc-table td:nth-child(2) { width: 36%; }
-
-.doc-tasks-title {
-  font-size: 12pt;
-  font-weight: 700;
-  margin-bottom: 7px;
-}
-
-.doc-tasks-list {
-  font-size: 12pt;
-  padding-left: 24px;
-  margin-bottom: 12px;
-}
-
-.doc-tasks-list li { margin-bottom: 5px; text-align: justify; }
-
-.doc-schedule { font-size: 12pt; margin-bottom: 9px; }
-
-.doc-safety {
-  font-size: 12pt;
-  text-align: justify;
-  margin-bottom: 20px;
-}
-
-.doc-sig-role { font-size: 12pt; font-weight: 700; margin-bottom: 5px; }
-
-.doc-sig-row {
-  font-size: 12pt;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.doc-sig-info { line-height: 1.6; }
-
-.doc-sig-line {
-  min-width: 180px;
-  border-bottom: 1px solid #000;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.doc-footer {
-  margin-top: 28px;
-  padding-top: 10px;
-  border-top: 1px solid #CCC;
-  font-size: 8pt;
-  color: #555;
-  line-height: 1.85;
-}
-
-.doc-footer a { color: #0052CC; text-decoration: none; }
-.doc-footer a:hover { text-decoration: underline; }
-
-.ph { color: #B0B0B0; font-style: italic; }
+.doc-letterhead{display:flex;align-items:flex-start;gap:22px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #999}
+.doc-logo-img{width:115px;max-width:100%;height:auto;display:block;padding-top:3px}
+.doc-letterhead-info{flex:1}
+.doc-co-name{font-size:13pt;font-weight:700;margin-bottom:4px}
+.doc-co-details{font-size:9pt;line-height:1.7;color:#222}
+.doc-recipient{font-size:11pt;margin-bottom:3px}
+.doc-from{font-size:11pt;margin-bottom:20px}
+.doc-title{text-align:center;font-size:14pt;font-weight:700;text-decoration:underline;margin-bottom:18px}
+.doc-body{font-size:12pt;text-align:justify;margin-bottom:14px}
+.doc-executor-label{font-size:12pt;font-weight:700;margin:12px 0 7px}
+.doc-table{width:100%;border-collapse:collapse;font-size:11pt;margin-bottom:14px}
+.doc-table th,.doc-table td{border:1px solid #000;padding:6px 9px;vertical-align:middle}
+.doc-table th{background:#F0F0F0;font-weight:700;text-align:center}
+.doc-table td:first-child{text-align:center;width:8%}
+.doc-table td:nth-child(2){width:36%}
+.doc-tasks-title{font-size:12pt;font-weight:700;margin-bottom:7px}
+.doc-tasks-list{font-size:12pt;padding-left:24px;margin-bottom:12px}
+.doc-tasks-list li{margin-bottom:5px;text-align:justify}
+.doc-schedule{font-size:12pt;margin-bottom:9px}
+.doc-safety{font-size:12pt;text-align:justify;margin-bottom:20px}
+.doc-sig-role{font-size:12pt;font-weight:700;margin-bottom:5px}
+.doc-sig-row{font-size:12pt;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.doc-sig-info{line-height:1.6}
+.doc-sig-line{min-width:180px;border-bottom:1px solid #000;height:22px;flex-shrink:0}
+.doc-footer{margin-top:26px;padding-top:10px;border-top:1px solid #CCC;font-size:8pt;color:#555;line-height:1.85}
+.doc-footer a{color:#0052CC;text-decoration:none}
+.ph{color:#B0B0B0;font-style:italic}
 
 /* ═══ MOBILE TABS ═══ */
-.mobile-tabs { display: none; }
-.mobile-fab { display: none; }
+.mobile-tabs{display:none}
+.mobile-fab{display:none}
 
 /* ═══ PRINT ═══ */
-@media print {
-  body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .sidebar, .mobile-tabs, .mobile-fab, .preview-status { display: none !important; }
-  .app { display: block !important; }
-  .preview { padding: 0 !important; display: block !important; overflow: visible !important; background: #fff !important; }
-  .doc {
-    width: 100% !important;
-    min-height: auto !important;
-    padding: 0 !important;
-    font-size: 11pt !important;
+@media print{
+  body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sidebar,.mobile-tabs,.mobile-fab,.preview-hint{display:none!important}
+  .app{display:block!important}
+  .preview{padding:0!important;display:block!important;overflow:visible!important}
+  .doc{width:100%!important;min-height:auto!important;padding:0!important;font-size:11pt!important}
+  @page{size:A4 portrait;margin:20mm 18mm 20mm 22mm}
+}
+
+/* ═══ TABLET ═══ */
+@media(max-width:1100px) and (min-width:769px){
+  .sidebar{width:290px;min-width:290px}
+  .preview{padding:30px 20px}
+  .doc{width:100%;min-height:auto;font-size:11pt}
+}
+
+/* ═══ MOBILE ═══ */
+@media(max-width:768px){
+  body{background:#1C1C1E}
+  .app{flex-direction:column;padding-bottom:64px}
+  .sidebar{width:100%;min-width:0;min-height:auto;height:auto;position:static;display:none}
+  .sidebar.active{display:flex;flex-direction:column}
+  .preview{padding:0;display:none;background:#DCDCDC;overflow-x:hidden}
+  .preview.active{display:flex;flex-direction:column;align-items:center;padding:14px 10px 24px}
+  .preview-hint{display:none}
+  .doc{width:100%;min-height:auto;padding:22px 16px 26px;font-size:10pt}
+  .doc-co-name{font-size:11pt}
+  .doc-co-details,.doc-footer{font-size:8pt}
+  .doc-title{font-size:11pt}
+  .doc-body,.doc-tasks-list,.doc-schedule,.doc-safety,.doc-sig-role,.doc-sig-row,.doc-executor-label{font-size:10pt}
+  .doc-table{font-size:9pt}
+  .doc-table th,.doc-table td{padding:5px 7px}
+  .doc-logo-img{width:85px}
+
+  .mobile-tabs{
+    display:flex;position:fixed;bottom:0;left:0;right:0;height:64px;
+    background:#111;border-top:1px solid rgba(255,255,255,.1);z-index:100
   }
-  @page { size: A4 portrait; margin: 20mm 18mm 20mm 22mm; }
-}
-
-/* ═══ RESPONSIVE — планшет ═══ */
-@media (max-width: 1100px) and (min-width: 769px) {
-  .sidebar { width: 300px; min-width: 300px; }
-  .preview { padding: 32px 24px; }
-  .doc { width: 100%; font-size: 11pt; min-height: auto; }
-}
-
-/* ═══ RESPONSIVE — мобильный ═══ */
-@media (max-width: 768px) {
-  body { background: #1C1C1E; }
-
-  .app {
-    flex-direction: column;
-    min-height: calc(100vh - 64px);
-    padding-bottom: 64px;
+  .tab-btn{
+    flex:1;border:none;background:transparent;color:rgba(255,255,255,.4);
+    font-family:inherit;font-size:12px;font-weight:500;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .15s
   }
+  .tab-btn.active{color:#fff}
+  .tab-btn svg{transition:opacity .15s;opacity:.45}
+  .tab-btn.active svg{opacity:1}
+  .tab-divider{width:1px;background:rgba(255,255,255,.1);margin:14px 0}
 
-  .sidebar {
-    width: 100%; min-width: 0;
-    min-height: auto; height: auto;
-    position: static;
-    overflow-y: visible;
-    display: none;
+  .mobile-fab{
+    display:none;position:fixed;bottom:78px;right:14px;z-index:99;
+    background:#FC3F1D;color:#fff;border:none;border-radius:26px;
+    padding:12px 18px;font-family:inherit;font-size:14px;font-weight:500;
+    gap:7px;align-items:center;cursor:pointer;
+    -webkit-tap-highlight-color:transparent
   }
-
-  .sidebar.active { display: flex; flex-direction: column; }
-
-  .preview {
-    padding: 0;
-    display: none;
-    background: #DCDCDC;
-    align-items: flex-start;
-    overflow-x: hidden;
-    min-height: calc(100vh - 64px);
-  }
-
-  .preview.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 12px 24px;
-  }
-
-  .preview-status { display: none; }
-
-  .doc {
-    width: 100%;
-    min-height: auto;
-    padding: 24px 18px 28px;
-    font-size: 10pt;
-  }
-
-  .doc-co-name { font-size: 11pt; }
-  .doc-co-details { font-size: 8pt; }
-  .doc-title { font-size: 11pt; }
-  .doc-body { font-size: 10pt; }
-  .doc-executor-label { font-size: 10pt; }
-  .doc-table { font-size: 9pt; }
-  .doc-table th, .doc-table td { padding: 5px 7px; }
-  .doc-tasks-list { font-size: 10pt; }
-  .doc-schedule { font-size: 10pt; }
-  .doc-safety { font-size: 10pt; }
-  .doc-sig-role { font-size: 10pt; }
-  .doc-sig-row { font-size: 10pt; }
-  .doc-footer { font-size: 7.5pt; }
-  .doc-logo-img { width: 90px; }
-
-  /* ── Мобильные табы ── */
-  .mobile-tabs {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 64px;
-    background: #111;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    z-index: 100;
-  }
-
-  .tab-btn {
-    flex: 1;
-    border: none;
-    background: transparent;
-    color: rgba(255,255,255,0.4);
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    cursor: pointer;
-    transition: color 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .tab-btn.active { color: #fff; }
-
-  .tab-btn svg { opacity: 0.5; transition: opacity 0.15s; }
-  .tab-btn.active svg { opacity: 1; }
-
-  .tab-divider {
-    width: 1px;
-    background: rgba(255,255,255,0.1);
-    margin: 14px 0;
-  }
-
-  /* ── FAB (кнопка печати поверх письма) ── */
-  .mobile-fab {
-    display: flex;
-    position: fixed;
-    bottom: 80px;
-    right: 16px;
-    z-index: 99;
-    background: #FC3F1D;
-    color: #fff;
-    border: none;
-    border-radius: 28px;
-    padding: 13px 18px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    gap: 8px;
-    align-items: center;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 4px 16px rgba(252,63,29,0.4);
-  }
-
-  .mobile-fab:active { transform: scale(0.96); }
-}
-
-/* ── iOS sheet ── */
-.ios-sheet-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 200;
-  align-items: flex-end;
-  justify-content: center;
-}
-.ios-sheet-overlay.open { display: flex; }
-.ios-sheet {
-  background: #1C1C1E;
-  border-radius: 16px 16px 0 0;
-  padding: 12px 22px 36px;
-  width: 100%;
-  max-width: 560px;
-  max-height: 88vh;
-  overflow-y: auto;
-  color: #fff;
-}
-.ios-sheet-handle {
-  width: 36px; height: 4px;
-  background: rgba(255,255,255,0.25);
-  border-radius: 2px;
-  margin: 0 auto 18px;
-}
-.ios-sheet-title {
-  font-size: 17px; font-weight: 600;
-  margin-bottom: 6px;
-}
-.ios-sheet-desc {
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-.ios-way {
-  display: flex; gap: 14px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 10px;
-}
-.ios-way-num {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: #FC3F1D;
-  font-size: 13px; font-weight: 700; color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.ios-way-title {
-  font-size: 14px; font-weight: 600;
-  margin-bottom: 8px;
-}
-.ios-step {
-  font-size: 13px;
-  color: rgba(255,255,255,0.75);
-  margin-bottom: 6px;
-  display: flex; align-items: baseline; gap: 6px;
-  line-height: 1.45;
-}
-.ios-step-icon {
-  font-size: 15px; flex-shrink: 0;
-  width: 20px; text-align: center;
-}
-.ios-sheet-tip {
-  font-size: 12px;
-  color: rgba(255,255,255,0.38);
-  margin: 14px 0;
-  line-height: 1.6;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 14px;
-}
-.ios-sheet-close {
-  width: 100%;
-  background: #FC3F1D;
-  color: #fff; border: none;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: inherit; font-size: 15px; font-weight: 500;
-  cursor: pointer; margin-top: 4px;
-  -webkit-tap-highlight-color: transparent;
 }
 </style>
 </head>
 <body>
 
-<!-- ── Мобильные табы (видны только на телефоне) ── -->
 <div class="mobile-tabs">
   <button class="tab-btn active" id="tab-form" onclick="showTab('form')">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
     Форма
   </button>
   <div class="tab-divider"></div>
   <button class="tab-btn" id="tab-letter" onclick="showTab('letter')">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     Письмо
   </button>
 </div>
 
-<!-- ── FAB — печать (мобильный) ── -->
-<button class="mobile-fab" onclick="handlePrint()" aria-label="Печать">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+<button class="mobile-fab" id="fab" onclick="window.print()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
   PDF
 </button>
 
 <div class="app">
 
-  <!-- ════ SIDEBAR (форма) ════ -->
   <div class="sidebar active" id="sidebar">
-    <div class="sb-header">
+    <div class="sb-head">
       <div class="logo">
         <div class="logo-badge">С</div>
         <div>
@@ -637,7 +220,7 @@ body {
         <input id="i-par" type="text" placeholder="Название компании-партнёра" oninput="render()" autocomplete="off">
       </div>
       <div class="field">
-        <div class="field-label">Адрес магазина задания <span class="req">*</span></div>
+        <div class="field-label">Адрес магазина <span class="req">*</span></div>
         <input id="i-adr" type="text" placeholder="г. Москва, ул. Примерная, д. 1" oninput="render()" autocomplete="off">
       </div>
       <div class="field">
@@ -655,27 +238,23 @@ body {
     </div>
 
     <div class="sb-actions">
-      <button class="btn-print" onclick="handlePrint()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      <button class="btn-primary" onclick="doPrint()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         Распечатать / Сохранить PDF
       </button>
-      <button class="btn-clear" onclick="clearForm()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-        Очистить форму
+      <button class="btn-ghost" onclick="clearForm()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        Очистить
       </button>
     </div>
   </div>
 
-  <!-- ════ PREVIEW (письмо) ════ -->
   <div class="preview" id="preview-panel">
-    <div class="preview-status">Документ обновляется автоматически — нажмите «Распечатать» или Ctrl+P для PDF</div>
-
+    <div class="preview-hint">Документ обновляется автоматически</div>
     <div class="doc" id="doc">
 
       <div class="doc-letterhead">
-        <div class="doc-letterhead-logo">
-          <img src="data:image/png;base64,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" alt="Яндекс" class="doc-logo-img">
-        </div>
+        <div><img src="data:image/png;base64,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" alt="Яндекс" class="doc-logo-img"></div>
         <div class="doc-letterhead-info">
           <div class="doc-co-name">ООО «Смена»</div>
           <div class="doc-co-details">
@@ -692,27 +271,16 @@ body {
 
       <div class="doc-title">Сопроводительное письмо</div>
 
-      <p class="doc-body">
-        Прошу Вас разрешить доступ на территорию гипермаркета&nbsp;"<span id="d1"></span>"&nbsp;по адресу&nbsp;<span id="d2"></span>&nbsp;исполнителя ООО «СМЕНА» для проведения работ по выкладке продукции компании&nbsp;"<span id="d3"></span>"&nbsp;на территории торговой точки&nbsp;"<span id="d4"></span>"
-      </p>
+      <p class="doc-body">Прошу Вас разрешить доступ на территорию гипермаркета&nbsp;"<span id="d1"></span>"&nbsp;по адресу&nbsp;<span id="d2"></span>&nbsp;исполнителя ООО «СМЕНА» для проведения работ по выкладке продукции компании&nbsp;"<span id="d3"></span>"&nbsp;на территории торговой точки&nbsp;"<span id="d4"></span>"</p>
 
       <div class="doc-executor-label">Исполнитель:</div>
-
       <table class="doc-table">
-        <thead>
-          <tr>
-            <th>№&nbsp;п/п</th>
-            <th>ФИО</th>
-            <th>ID смены и дата рождения</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td id="d5"></td>
-            <td>ID смены: <span id="d6"></span>&nbsp;&nbsp;Дата рождения: <span id="d7"></span></td>
-          </tr>
-        </tbody>
+        <thead><tr><th>№&nbsp;п/п</th><th>ФИО</th><th>ID смены и дата рождения</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td id="d5"></td>
+          <td>ID смены: <span id="d6"></span>&nbsp;&nbsp;Дата рождения: <span id="d7"></span></td>
+        </tr></tbody>
       </table>
 
       <div class="doc-tasks-title">Задачи:</div>
@@ -724,25 +292,19 @@ body {
       </ul>
 
       <p class="doc-schedule"><strong>График работы:</strong> Пн-Пт с 8:00 до 17:00</p>
-
-      <p class="doc-safety">
-        Исполнитель прошел обучение, стажировку, инструктажи и проверку знаний по технике безопасности, по пожарной безопасности, медосмотр. Медицинская книжка в наличии.
-      </p>
+      <p class="doc-safety">Исполнитель прошел обучение, стажировку, инструктажи и проверку знаний по технике безопасности, по пожарной безопасности, медосмотр. Медицинская книжка в наличии.</p>
 
       <div class="doc-sig-role"><strong>Менеджер отдела мерчендайзинга ООО «Смена»</strong></div>
       <div class="doc-sig-row">
-        <div class="doc-sig-info">
-          Карапетов Родион Андреевич<br>
-          +7 996 509 52-33
-        </div>
+        <div class="doc-sig-info">Карапетов Родион Андреевич<br>+7 996 509 52-33</div>
         <div class="doc-sig-line"></div>
       </div>
 
       <div class="doc-footer">
-        Выражено согласие с Политикой конфиденциальности, размещённой по ссылке:
-        <a href="https://yandex.ru/legal/confidential/ru/" target="_blank" rel="noopener noreferrer">https://yandex.ru/legal/confidential/ru/</a><br>
-        Выражено согласие с Пользовательским соглашением, размещённым по ссылке:
-        <a href="https://yandex.ru/legal/smena_termsofuse/" target="_blank" rel="noopener noreferrer">https://yandex.ru/legal/smena_termsofuse/</a>
+        Выражено согласие с Политикой конфиденциальности:
+        <a href="https://yandex.ru/legal/confidential/ru/" target="_blank" rel="noopener">https://yandex.ru/legal/confidential/ru/</a><br>
+        Выражено согласие с Пользовательским соглашением:
+        <a href="https://yandex.ru/legal/smena_termsofuse/" target="_blank" rel="noopener">https://yandex.ru/legal/smena_termsofuse/</a>
       </div>
 
     </div>
@@ -751,910 +313,75 @@ body {
 </div>
 
 <script>
-(function () {
-  /* ── Data binding ── */
-  function fmtDate(s) {
-    if (!s) return null;
-    var p = s.split('-');
-    if (p.length !== 3) return null;
-    return p[2] + '.' + p[1] + '.' + p[0];
+(function(){
+  function fmtDate(s){
+    if(!s) return null;
+    var p=s.split('-');
+    return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : null;
   }
-  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
-  function ph(t)    { return '<span class="ph">' + t + '</span>'; }
-  function set(id, v, placeholder) {
-    var el = document.getElementById(id);
-    if (el) el.innerHTML = v ? v : ph(placeholder);
-  }
+  function val(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+  function ph(t){return '<span class="ph">'+t+'</span>';}
+  function set(id,v,p){var e=document.getElementById(id);if(e)e.innerHTML=v?v:ph(p);}
 
-  window.render = function () {
-    var net = val('i-net'), par = val('i-par'), adr = val('i-adr'),
-        nam = val('i-nam'), sid = val('i-sid'), dob = fmtDate(val('i-dob'));
-    set('d0', net, 'Название сети');
-    set('d1', net, 'название сети');
-    set('d2', adr, 'адрес магазина');
-    set('d3', par, 'название партнёра');
-    set('d4', net, 'название сети');
-    set('d5', nam, 'ФИО исполнителя');
-    set('d6', sid, 'не указан');
-    set('d7', dob, 'не указана');
-    set('d8',  par, 'партнёр');
-    set('d9',  par, 'партнёр');
-    set('d10', par, 'партнёр');
-    set('d11', par, 'партнёр');
+  window.render=function(){
+    var net=val('i-net'),par=val('i-par'),adr=val('i-adr'),
+        nam=val('i-nam'),sid=val('i-sid'),dob=fmtDate(val('i-dob'));
+    set('d0',net,'Название сети');
+    set('d1',net,'название сети');
+    set('d2',adr,'адрес магазина');
+    set('d3',par,'название партнёра');
+    set('d4',net,'название сети');
+    set('d5',nam,'ФИО исполнителя');
+    set('d6',sid,'не указан');
+    set('d7',dob,'не указана');
+    set('d8',par,'партнёр'); set('d9',par,'партнёр');
+    set('d10',par,'партнёр'); set('d11',par,'партнёр');
   };
 
-  window.clearForm = function () {
-    ['i-net','i-par','i-adr','i-nam','i-sid','i-dob'].forEach(function (id) {
-      var el = document.getElementById(id); if (el) el.value = '';
+  window.clearForm=function(){
+    ['i-net','i-par','i-adr','i-nam','i-sid','i-dob'].forEach(function(id){
+      var e=document.getElementById(id);if(e)e.value='';
     });
     render();
   };
 
-  /* ── iOS detection ── */
-  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  var isLocalFile = window.location.protocol === 'file:';
-
-  /* ── Print handler ── */
-  window.handlePrint = function () {
-    /* Ensure the document is visible before printing */
-    var pv = document.getElementById('preview-panel');
-    var wasHidden = window.getComputedStyle(pv).display === 'none';
-    if (wasHidden) { pv.style.cssText = 'display:block!important'; }
-
-    if (isIOS || isLocalFile) {
-      /* Show iOS instructions sheet */
-      document.getElementById('ios-sheet').classList.add('open');
-      /* Still attempt print — works if page is served over HTTP */
-      if (!isLocalFile) { setTimeout(function () { window.print(); }, 200); }
-    } else {
+  window.doPrint=function(){
+    /* Ensure document is visible even if mobile preview tab isn't active */
+    var pv=document.getElementById('preview-panel');
+    var doc=document.getElementById('doc');
+    var prevDisplay=pv.style.display;
+    pv.style.setProperty('display','block','important');
+    doc.style.setProperty('display','block','important');
+    setTimeout(function(){
       window.print();
-    }
-
-    if (wasHidden) {
-      setTimeout(function () { pv.style.cssText = ''; }, 1500);
-    }
+      setTimeout(function(){
+        pv.style.display=prevDisplay;
+        doc.style.display='';
+      },500);
+    },50);
   };
 
-  window.closeSheet = function () {
-    document.getElementById('ios-sheet').classList.remove('open');
-  };
-
-  /* Web Share API — share page URL */
-  window.sharePage = function () {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Сопроводительное письмо — ООО Смена',
-        url: window.location.href
-      }).catch(function () {});
-    }
-  };
-
-  /* ── Tab switching ── */
-  window.showTab = function (tab) {
-    var sb  = document.getElementById('sidebar');
-    var pv  = document.getElementById('preview-panel');
-    var fab = document.querySelector('.mobile-fab');
-    var bf  = document.getElementById('tab-form');
-    var bl  = document.getElementById('tab-letter');
-    if (tab === 'form') {
-      sb.classList.add('active');   pv.classList.remove('active');
-      fab.style.display = 'none';
-      bf.classList.add('active');   bl.classList.remove('active');
+  window.showTab=function(tab){
+    var sb=document.getElementById('sidebar');
+    var pv=document.getElementById('preview-panel');
+    var fab=document.getElementById('fab');
+    var bf=document.getElementById('tab-form');
+    var bl=document.getElementById('tab-letter');
+    if(tab==='form'){
+      sb.classList.add('active'); pv.classList.remove('active');
+      fab.style.display='none';
+      bf.classList.add('active'); bl.classList.remove('active');
     } else {
       sb.classList.remove('active'); pv.classList.add('active');
-      fab.style.display = 'flex';
+      fab.style.display='flex';
       bf.classList.remove('active'); bl.classList.add('active');
     }
   };
 
-  /* Hide FAB on desktop/initial load */
-  (function () {
-    var fab = document.querySelector('.mobile-fab');
-    if (fab) fab.style.display = 'none';
-  })();
-
+  /* Hide FAB on init */
+  document.getElementById('fab').style.display='none';
   render();
 }());
-</script>>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Конструктор сопроводительного письма для мерчандайзеров — ООО Смена">
-<title>Сопроводительное письмо — ООО «Смена»</title>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  background: #DCDCDC;
-  color: #1A1A1A;
-  min-height: 100%;
-}
-
-/* ═══ DESKTOP LAYOUT ═══ */
-.app {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* ── Sidebar ── */
-.sidebar {
-  width: 340px;
-  min-width: 340px;
-  background: #1C1C1E;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-}
-
-.sb-header {
-  padding: 26px 28px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  flex-shrink: 0;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 13px;
-}
-
-.logo-badge {
-  width: 38px; height: 38px;
-  background: #FC3F1D;
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; font-weight: 700; color: #fff;
-  flex-shrink: 0;
-}
-
-.logo-name { font-size: 15px; font-weight: 600; color: #fff; }
-.logo-dept { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 2px; }
-
-.sb-tag {
-  display: inline-block;
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.42);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 5px;
-}
-
-.sb-fields {
-  flex: 1;
-  padding: 20px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-y: auto;
-}
-
-.field { display: flex; flex-direction: column; gap: 6px; }
-
-.field-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.42);
-  user-select: none;
-}
-
-.field-label .req { color: #FC3F1D; margin-left: 2px; }
-
-.field input {
-  background: rgba(255,255,255,0.07);
-  border: 1.5px solid rgba(255,255,255,0.11);
-  border-radius: 8px;
-  padding: 10px 13px;
-  font-family: inherit;
-  font-size: 15px;
-  color: #fff;
-  outline: none;
-  transition: border-color 0.15s, background 0.15s;
-  width: 100%;
-  -webkit-appearance: none;
-}
-
-.field input:hover { border-color: rgba(255,255,255,0.22); }
-.field input:focus {
-  border-color: #FC3F1D;
-  background: rgba(255,255,255,0.11);
-}
-.field input::placeholder { color: rgba(255,255,255,0.2); }
-.field input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1) opacity(0.32);
-  cursor: pointer;
-}
-
-.sb-actions {
-  padding: 16px 28px 26px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.btn-print {
-  background: #FC3F1D;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 13px 18px;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: background 0.15s;
-  width: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.btn-print:hover { background: #E03518; }
-.btn-print:active { background: #C42D10; transform: scale(0.98); }
-
-.btn-clear {
-  background: transparent;
-  color: rgba(255,255,255,0.33);
-  border: 1.5px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  padding: 11px 18px;
-  font-family: inherit;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.15s;
-  width: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.btn-clear:hover {
-  color: rgba(255,255,255,0.65);
-  border-color: rgba(255,255,255,0.25);
-}
-
-/* ── Preview ── */
-.preview {
-  flex: 1;
-  overflow-y: auto;
-  padding: 44px 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.preview-status {
-  width: 100%;
-  max-width: 794px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 12px;
-}
-
-.preview-status::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #4CAF50;
-  flex-shrink: 0;
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
-}
-
-/* ── A4 document ── */
-.doc {
-  background: #fff;
-  width: 794px;
-  min-height: 1100px;
-  padding: 52px 64px 58px;
-  font-family: 'Times New Roman', Times, Georgia, serif;
-  font-size: 12pt;
-  color: #000;
-  line-height: 1.5;
-}
-
-.doc-letterhead {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #999;
-}
-
-.doc-letterhead-logo {
-  flex-shrink: 0;
-  padding-top: 4px;
-}
-
-.doc-logo-img {
-  width: 120px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-.doc-letterhead-info { flex: 1; }
-
-.doc-co-name {
-  font-size: 13pt;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.doc-co-details {
-  font-size: 9pt;
-  line-height: 1.7;
-  color: #222;
-}
-
-.doc-recipient { font-size: 11pt; margin-bottom: 4px; }
-.doc-from { font-size: 11pt; margin-bottom: 20px; }
-
-.doc-title {
-  text-align: center;
-  font-size: 14pt;
-  font-weight: 700;
-  text-decoration: underline;
-  margin-bottom: 18px;
-}
-
-.doc-body {
-  font-size: 12pt;
-  text-align: justify;
-  margin-bottom: 14px;
-}
-
-.doc-executor-label {
-  font-size: 12pt;
-  font-weight: 700;
-  margin: 12px 0 8px;
-}
-
-.doc-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11pt;
-  margin-bottom: 14px;
-}
-
-.doc-table th, .doc-table td {
-  border: 1px solid #000;
-  padding: 6px 10px;
-  vertical-align: middle;
-}
-
-.doc-table th {
-  background: #F0F0F0;
-  font-weight: 700;
-  text-align: center;
-}
-
-.doc-table td:first-child { text-align: center; width: 8%; }
-.doc-table td:nth-child(2) { width: 36%; }
-
-.doc-tasks-title {
-  font-size: 12pt;
-  font-weight: 700;
-  margin-bottom: 7px;
-}
-
-.doc-tasks-list {
-  font-size: 12pt;
-  padding-left: 24px;
-  margin-bottom: 12px;
-}
-
-.doc-tasks-list li { margin-bottom: 5px; text-align: justify; }
-
-.doc-schedule { font-size: 12pt; margin-bottom: 9px; }
-
-.doc-safety {
-  font-size: 12pt;
-  text-align: justify;
-  margin-bottom: 20px;
-}
-
-.doc-sig-role { font-size: 12pt; font-weight: 700; margin-bottom: 5px; }
-
-.doc-sig-row {
-  font-size: 12pt;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.doc-sig-info { line-height: 1.6; }
-
-.doc-sig-line {
-  min-width: 180px;
-  border-bottom: 1px solid #000;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.doc-footer {
-  margin-top: 28px;
-  padding-top: 10px;
-  border-top: 1px solid #CCC;
-  font-size: 8pt;
-  color: #555;
-  line-height: 1.85;
-}
-
-.doc-footer a { color: #0052CC; text-decoration: none; }
-.doc-footer a:hover { text-decoration: underline; }
-
-.ph { color: #B0B0B0; font-style: italic; }
-
-/* ═══ MOBILE TABS ═══ */
-.mobile-tabs { display: none; }
-.mobile-fab { display: none; }
-
-/* ═══ PRINT ═══ */
-@media print {
-  body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .sidebar, .mobile-tabs, .mobile-fab, .preview-status { display: none !important; }
-  .app { display: block !important; }
-  .preview { padding: 0 !important; display: block !important; overflow: visible !important; background: #fff !important; }
-  .doc {
-    width: 100% !important;
-    min-height: auto !important;
-    padding: 0 !important;
-    font-size: 11pt !important;
-  }
-  @page { size: A4 portrait; margin: 20mm 18mm 20mm 22mm; }
-}
-
-/* ═══ RESPONSIVE — планшет ═══ */
-@media (max-width: 1100px) and (min-width: 769px) {
-  .sidebar { width: 300px; min-width: 300px; }
-  .preview { padding: 32px 24px; }
-  .doc { width: 100%; font-size: 11pt; min-height: auto; }
-}
-
-/* ═══ RESPONSIVE — мобильный ═══ */
-@media (max-width: 768px) {
-  body { background: #1C1C1E; }
-
-  .app {
-    flex-direction: column;
-    min-height: calc(100vh - 64px);
-    padding-bottom: 64px;
-  }
-
-  .sidebar {
-    width: 100%; min-width: 0;
-    min-height: auto; height: auto;
-    position: static;
-    overflow-y: visible;
-    display: none;
-  }
-
-  .sidebar.active { display: flex; flex-direction: column; }
-
-  .preview {
-    padding: 0;
-    display: none;
-    background: #DCDCDC;
-    align-items: flex-start;
-    overflow-x: hidden;
-    min-height: calc(100vh - 64px);
-  }
-
-  .preview.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 12px 24px;
-  }
-
-  .preview-status { display: none; }
-
-  .doc {
-    width: 100%;
-    min-height: auto;
-    padding: 24px 18px 28px;
-    font-size: 10pt;
-  }
-
-  .doc-co-name { font-size: 11pt; }
-  .doc-co-details { font-size: 8pt; }
-  .doc-title { font-size: 11pt; }
-  .doc-body { font-size: 10pt; }
-  .doc-executor-label { font-size: 10pt; }
-  .doc-table { font-size: 9pt; }
-  .doc-table th, .doc-table td { padding: 5px 7px; }
-  .doc-tasks-list { font-size: 10pt; }
-  .doc-schedule { font-size: 10pt; }
-  .doc-safety { font-size: 10pt; }
-  .doc-sig-role { font-size: 10pt; }
-  .doc-sig-row { font-size: 10pt; }
-  .doc-footer { font-size: 7.5pt; }
-  .doc-logo-img { width: 90px; }
-
-  /* ── Мобильные табы ── */
-  .mobile-tabs {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 64px;
-    background: #111;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    z-index: 100;
-  }
-
-  .tab-btn {
-    flex: 1;
-    border: none;
-    background: transparent;
-    color: rgba(255,255,255,0.4);
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    cursor: pointer;
-    transition: color 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .tab-btn.active { color: #fff; }
-
-  .tab-btn svg { opacity: 0.5; transition: opacity 0.15s; }
-  .tab-btn.active svg { opacity: 1; }
-
-  .tab-divider {
-    width: 1px;
-    background: rgba(255,255,255,0.1);
-    margin: 14px 0;
-  }
-
-  /* ── FAB (кнопка печати поверх письма) ── */
-  .mobile-fab {
-    display: flex;
-    position: fixed;
-    bottom: 80px;
-    right: 16px;
-    z-index: 99;
-    background: #FC3F1D;
-    color: #fff;
-    border: none;
-    border-radius: 28px;
-    padding: 13px 18px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    gap: 8px;
-    align-items: center;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 4px 16px rgba(252,63,29,0.4);
-  }
-
-  .mobile-fab:active { transform: scale(0.96); }
-}
-</style>
-</head>
-<body>
-
-<!-- ── Мобильные табы (видны только на телефоне) ── -->
-<div class="mobile-tabs">
-  <button class="tab-btn active" id="tab-form" onclick="showTab('form')">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-    Форма
-  </button>
-  <div class="tab-divider"></div>
-  <button class="tab-btn" id="tab-letter" onclick="showTab('letter')">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-    Письмо
-  </button>
-</div>
-
-<!-- ── FAB — печать (мобильный) ── -->
-<button class="mobile-fab" onclick="handlePrint()" aria-label="Печать">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-  PDF
-</button>
-
-<div class="app">
-
-  <!-- ════ SIDEBAR (форма) ════ -->
-  <div class="sidebar active" id="sidebar">
-    <div class="sb-header">
-      <div class="logo">
-        <div class="logo-badge">С</div>
-        <div>
-          <div class="logo-name">ООО «Смена»</div>
-          <div class="logo-dept">Мерчендайзинг</div>
-        </div>
-      </div>
-      <span class="sb-tag">Конструктор письма</span>
-    </div>
-
-    <div class="sb-fields">
-      <div class="field">
-        <div class="field-label">Торговая сеть</div>
-        <input id="i-net" type="text" placeholder="Лента, Магнит, Пятёрочка…" oninput="render()" autocomplete="off">
-      </div>
-      <div class="field">
-        <div class="field-label">Партнёр</div>
-        <input id="i-par" type="text" placeholder="Название компании-партнёра" oninput="render()" autocomplete="off">
-      </div>
-      <div class="field">
-        <div class="field-label">Адрес магазина задания <span class="req">*</span></div>
-        <input id="i-adr" type="text" placeholder="г. Москва, ул. Примерная, д. 1" oninput="render()" autocomplete="off">
-      </div>
-      <div class="field">
-        <div class="field-label">ФИО исполнителя</div>
-        <input id="i-nam" type="text" placeholder="Иванов Иван Иванович" oninput="render()" autocomplete="off">
-      </div>
-      <div class="field">
-        <div class="field-label">ID Смены</div>
-        <input id="i-sid" type="text" placeholder="SHIFT-00000" oninput="render()" autocomplete="off">
-      </div>
-      <div class="field">
-        <div class="field-label">Дата рождения</div>
-        <input id="i-dob" type="date" oninput="render()">
-      </div>
-    </div>
-
-    <div class="sb-actions">
-      <button class="btn-print" onclick="handlePrint()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Распечатать / Сохранить PDF
-      </button>
-      <button class="btn-clear" onclick="clearForm()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-        Очистить форму
-      </button>
-    </div>
-  </div>
-
-  <!-- ════ PREVIEW (письмо) ════ -->
-  <div class="preview" id="preview-panel">
-    <div class="preview-status">Документ обновляется автоматически — нажмите «Распечатать» или Ctrl+P для PDF</div>
-
-    <div class="doc" id="doc">
-
-      <div class="doc-letterhead">
-        <div class="doc-letterhead-logo">
-          <img src="data:image/png;base64,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" alt="Яндекс" class="doc-logo-img">
-        </div>
-        <div class="doc-letterhead-info">
-          <div class="doc-co-name">ООО «Смена»</div>
-          <div class="doc-co-details">
-            123112, Россия, г. Москва, 1-ый Красногвардейский проезд,<br>
-            дом 21, строение 1, этаж 35, помещение 35.33<br>
-            Тел.: +7 495 739-70-00 &nbsp;|&nbsp; Факс: +7 495 739-70-70<br>
-            info@yandex-team.ru
-          </div>
-        </div>
-      </div>
-
-      <p class="doc-recipient">Директору магазина «<span id="d0"></span>»</p>
-      <p class="doc-from">От ООО «СМЕНА»</p>
-
-      <div class="doc-title">Сопроводительное письмо</div>
-
-      <p class="doc-body">
-        Прошу Вас разрешить доступ на территорию гипермаркета&nbsp;"<span id="d1"></span>"&nbsp;по адресу&nbsp;<span id="d2"></span>&nbsp;исполнителя ООО «СМЕНА» для проведения работ по выкладке продукции компании&nbsp;"<span id="d3"></span>"&nbsp;на территории торговой точки&nbsp;"<span id="d4"></span>"
-      </p>
-
-      <div class="doc-executor-label">Исполнитель:</div>
-
-      <table class="doc-table">
-        <thead>
-          <tr>
-            <th>№&nbsp;п/п</th>
-            <th>ФИО</th>
-            <th>ID смены и дата рождения</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td id="d5"></td>
-            <td>ID смены: <span id="d6"></span>&nbsp;&nbsp;Дата рождения: <span id="d7"></span></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="doc-tasks-title">Задачи:</div>
-      <ul class="doc-tasks-list">
-        <li>пополнение товарного запаса продукции "<span id="d8"></span>" со склада магазина;</li>
-        <li>контроль наличия ценников на ассортимент продукции "<span id="d9"></span>", изготовление ценников в случае их отсутствия;</li>
-        <li>контроль товарных остатков продукции "<span id="d10"></span>";</li>
-        <li>заполнение отчетов/фотоотчетов по поставляемой продукции "<span id="d11"></span>"</li>
-      </ul>
-
-      <p class="doc-schedule"><strong>График работы:</strong> Пн-Пт с 8:00 до 17:00</p>
-
-      <p class="doc-safety">
-        Исполнитель прошел обучение, стажировку, инструктажи и проверку знаний по технике безопасности, по пожарной безопасности, медосмотр. Медицинская книжка в наличии.
-      </p>
-
-      <div class="doc-sig-role"><strong>Менеджер отдела мерчендайзинга ООО «Смена»</strong></div>
-      <div class="doc-sig-row">
-        <div class="doc-sig-info">
-          Карапетов Родион Андреевич<br>
-          +7 996 509 52-33
-        </div>
-        <div class="doc-sig-line"></div>
-      </div>
-
-      <div class="doc-footer">
-        Выражено согласие с Политикой конфиденциальности, размещённой по ссылке:
-        <a href="https://yandex.ru/legal/confidential/ru/" target="_blank" rel="noopener noreferrer">https://yandex.ru/legal/confidential/ru/</a><br>
-        Выражено согласие с Пользовательским соглашением, размещённым по ссылке:
-        <a href="https://yandex.ru/legal/smena_termsofuse/" target="_blank" rel="noopener noreferrer">https://yandex.ru/legal/smena_termsofuse/</a>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-<script>
-(function () {
-  function fmtDate(s) {
-    if (!s) return null;
-    var p = s.split('-');
-    if (p.length !== 3) return null;
-    return p[2] + '.' + p[1] + '.' + p[0];
-  }
-
-  function val(id) {
-    var el = document.getElementById(id);
-    return el ? el.value.trim() : '';
-  }
-
-  function ph(text) {
-    return '<span class="ph">' + text + '</span>';
-  }
-
-  function set(id, v, placeholder) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.innerHTML = v ? v : ph(placeholder);
-  }
-
-  window.render = function () {
-    var net = val('i-net');
-    var par = val('i-par');
-    var adr = val('i-adr');
-    var nam = val('i-nam');
-    var sid = val('i-sid');
-    var dob = fmtDate(val('i-dob'));
-
-    set('d0',  net, 'Название сети');
-    set('d1',  net, 'название сети');
-    set('d2',  adr, 'адрес магазина');
-    set('d3',  par, 'название партнёра');
-    set('d4',  net, 'название сети');
-    set('d5',  nam, 'ФИО исполнителя');
-    set('d6',  sid, 'не указан');
-    set('d7',  dob, 'не указана');
-    set('d8',  par, 'партнёр');
-    set('d9',  par, 'партнёр');
-    set('d10', par, 'партнёр');
-    set('d11', par, 'партнёр');
-  };
-
-  window.clearForm = function () {
-    ['i-net','i-par','i-adr','i-nam','i-sid','i-dob'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.value = '';
-    });
-    render();
-  };
-
-  /* ── Мобильные табы ── */
-  window.showTab = function (tab) {
-    var sb = document.getElementById('sidebar');
-    var pv = document.getElementById('preview-panel');
-    var fab = document.querySelector('.mobile-fab');
-    var btnForm = document.getElementById('tab-form');
-    var btnLetter = document.getElementById('tab-letter');
-
-    if (tab === 'form') {
-      sb.classList.add('active');
-      pv.classList.remove('active');
-      fab.style.display = 'none';
-      btnForm.classList.add('active');
-      btnLetter.classList.remove('active');
-    } else {
-      sb.classList.remove('active');
-      pv.classList.add('active');
-      fab.style.display = 'flex';
-      btnForm.classList.remove('active');
-      btnLetter.classList.add('active');
-    }
-  };
-
-  /* Скрыть FAB на десктопе при загрузке */
-  function initTabs() {
-    var isMobile = window.innerWidth <= 768;
-    var fab = document.querySelector('.mobile-fab');
-    if (!isMobile) {
-      fab.style.display = 'none';
-    } else {
-      /* На мобильном по умолчанию — форма, FAB скрыт */
-      fab.style.display = 'none';
-    }
-  }
-
-  initTabs();
-  render();
-})();
 </script>
-
-<!-- ── iOS instructions sheet ── -->
-<div id="ios-sheet" class="ios-sheet-overlay" onclick="if(event.target===this)closeSheet()">
-  <div class="ios-sheet">
-    <div class="ios-sheet-handle"></div>
-    <div class="ios-sheet-title">Сохранение PDF на iPhone</div>
-    <div class="ios-sheet-desc">Safari блокирует печать для локальных файлов.<br>Воспользуйтесь одним из способов:</div>
-
-    <div class="ios-way">
-      <div class="ios-way-num">1</div>
-      <div class="ios-way-body">
-        <div class="ios-way-title">Через браузер Safari</div>
-        <div class="ios-way-steps">
-          <div class="ios-step"><span class="ios-step-icon">⬆</span> Нажмите кнопку <strong>Поделиться</strong> в Safari (снизу)</div>
-          <div class="ios-step"><span class="ios-step-icon">🖨</span> Выберите <strong>Напечатать</strong></div>
-          <div class="ios-step"><span class="ios-step-icon">👌</span> На превью страницы — <strong>сведите два пальца</strong></div>
-          <div class="ios-step"><span class="ios-step-icon">💾</span> Нажмите <strong>Поделиться → Сохранить в Файлы</strong></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ios-way">
-      <div class="ios-way-num">2</div>
-      <div class="ios-way-body">
-        <div class="ios-way-title">Через Chrome на iPhone</div>
-        <div class="ios-way-steps">
-          <div class="ios-step"><span class="ios-step-icon">⋯</span> Нажмите <strong>три точки</strong> (меню браузера)</div>
-          <div class="ios-step"><span class="ios-step-icon">🖨</span> Нажмите <strong>Поделиться → Напечатать</strong></div>
-          <div class="ios-step"><span class="ios-step-icon">💾</span> Далее как в способе 1</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ios-sheet-tip">
-      Если страница открыта <strong>через сайт</strong> (не из Файлов) — кнопка «Печать» сработает автоматически.
-    </div>
-
-    <button class="ios-sheet-close" onclick="closeSheet()">Понятно</button>
-  </div>
-</div>
 </body>
 </html>
